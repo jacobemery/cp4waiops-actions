@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  gather_facts: false
+  become: false
+  tasks:
+
+    - name: Patch k8s object using provided variables.
+      community.okd.k8s:
+        host: "{{ api_url }}"
+        api_key: "{{ api_token }}"
+        api_version: v1
+        namespace: robot-shop
+        kind: Service
+        name: mysql
+        apply: true
+        state: patched
+        validate_certs: false
+        validate:
+          fail_on_error: yes
+        definition:
+          spec:
+            selector:
+              service: mysql

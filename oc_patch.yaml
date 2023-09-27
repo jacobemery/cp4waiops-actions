@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: false
+  become: false
+  tasks:
+
+    - name: Patch k8s object using provided variables.
+      community.okd.k8s:
+        host: "{{ api_url }}"
+        api_key: "{{ api_token }}"
+        api_version: "{{ api_version }}"
+        namespace: "{{ namespace }}"
+        kind: "{{ kind }}"
+        name: "{{ name }}"
+        apply: true
+        state: patched
+        validate_certs: false
+        validate:
+          fail_on_error: yes
+        definition: |
+          {{ def }}
