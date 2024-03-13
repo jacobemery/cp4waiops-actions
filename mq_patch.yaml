@@ -1,0 +1,22 @@
+---
+- name: Patch MQ to allow puts.
+  hosts: localhost
+  gather_facts: false
+  become: false
+  tasks:
+
+    - name: Patch MQ to allow puts.
+      ansible.builtin.uri:
+        url: "https://{{ api_host }}:1419/ibmmq/rest/v1/admin/qmgr/WMQA/queue/ZCONN2.DEFAULT.MQZCEE.QUEUE"
+        method: PATCH
+        force_basic_auth: true
+        url_username: "{{ api_username }}"
+        url_password: "{{ api_password }}"
+        headers:
+          ibm-mq-rest-csrf-token: ''
+        body:
+          general:
+            inhibitPut: false
+        body_format: json
+        status_code: 204
+      register: call
