@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Patch mysql for robot-shop.
+  hosts: localhost
   gather_facts: false
   become: false
   tasks:
@@ -16,7 +17,7 @@
         state: patched
         validate_certs: false
         validate:
-          fail_on_error: yes
+          fail_on_error: true
         definition:
           spec:
             selector:
