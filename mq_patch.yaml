@@ -18,5 +18,6 @@
           general:
             inhibitPut: false
         body_format: json
+        validate_certs: false
         status_code: 204
       register: call
